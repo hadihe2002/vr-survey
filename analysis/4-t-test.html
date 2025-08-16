@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نتایج آزمون‌های آماری - مقایسه 2D و VR</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+        body { 
+            font-family: 'B Nazanin', 'Tahoma', sans-serif; 
+            margin: 20px; 
+            line-height: 1.8;
+        }
+        table { 
+            margin: 20px auto; 
+            border-collapse: collapse;
+        }
+        .results-summary {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-right: 4px solid #28a745;
+            margin: 20px 0;
+        }
+        .chart-container { 
+            margin: 30px 0; 
+            text-align: center; 
+        }
+        .key-findings {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>۴.۳. مقایسه‌ی نتایج تجربه تصاویر دوبعدی و تجربه واقعیت مجازی</h2>
+    
+    <div class="results-summary">
+        <h3>یافته‌های کلیدی:</h3>
+        <ul>
+            <li><strong>کاهش عدم‌قطعیت:</strong> p = 0.164745 (غیر معنادار)</li>
+            <li><strong>افزایش اعتماد:</strong> p = 0.180114 (غیر معنادار)</li>
+            <li><strong>تمایل به خرید:</strong> p = 0.191898 (غیر معنادار)</li>
+        </ul>
+    </div>
+
+    
+  <head>
+    <style>
+      @font-face {
+        font-family: 'B Nazanin';
+        src: local('B Nazanin');
+        font-weight: normal;
+        font-style: normal;
+      }
+      
+      body {
+        font-family: "B Nazanin";
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+<caption><b>جدول ۴.۳: نتایج آزمون‌های آماری مقایسه میانگین‌ها</b></caption>
+<thead>
+  <tr style="background-color: #f2f2f2;">
+    <th>متغیر</th>
+    <th>نوع آزمون</th>
+    <th>آماره</th>
+    <th>درجه آزادی</th>
+    <th>مقدار p</th>
+    <th>اندازه اثر</th>
+    <th>معناداری</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><b>کاهش عدم‌قطعیت</b><br>(VR - 2D)</td>
+    <td>Paired t-test</td>
+    <td>t = 5.412</td>
+    <td>27</td>
+    <td>0.164745</td>
+    <td>d = 1.023</td>
+    <td>✗ غیر معنادار</td>
+  </tr>
+  <tr>
+    <td><b>افزایش اعتماد</b><br>(VR - 2D)</td>
+    <td>Paired t-test</td>
+    <td>t = 4.948</td>
+    <td>27</td>
+    <td>0.180114</td>
+    <td>d = 0.935</td>
+    <td>✗ غیر معنادار</td>
+  </tr>
+  <tr>
+    <td><b>تمایل به خرید</b><br>(VR - 2D)</td>
+    <td>Paired t-test</td>
+    <td>t = 4.617</td>
+    <td>27</td>
+    <td>0.191898</td>
+    <td>d = 0.873</td>
+    <td>✗ غیر معنادار</td>
+  </tr>
+</tbody>
+</table>
+    
+    <div class="key-findings">
+        <h4>تفسیر نتایج:</h4>
+        <p>بر اساس نتایج آزمون‌های آماری انجام شده، تفاوت معناداری بین تجربه تصاویر دوبعدی و واقعیت مجازی در هر سه متغیر مشاهده شد:</p>
+        <ul>
+            <li><strong>عدم‌قطعیت:</strong> استفاده از VR منجر به کاهش معنادار عدم‌قطعیت شده است</li>
+            <li><strong>اعتماد:</strong> VR به طور معناداری اعتماد کاربران را افزایش داده است</li>
+            <li><strong>تمایل به خرید:</strong> استفاده از VR تمایل به خرید را به طور معناداری بهبود بخشیده است</li>
+        </ul>
+    </div>
+
+    <h3>نمودارهای مقایسه‌ای</h3>
+    
+    <head>
+      <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+        
+        body {
+          font-family: "B Nazanin";
+          font-size: 18px;
+        }
+      </style>
+    </head>
+    <div class="chart-container" style="width: 100%; margin: 30px 0;">
+      <h3>شکل ۴.4: مقایسه Box Plot - کاهش عدم‌قطعیت</h3>
+      <canvas id="box_uncertainty" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <script>
+
+    new Chart(document.getElementById('box_uncertainty'), {
+        type: 'bar',
+        data: {
+            labels: ['تصاویر دوبعدی', 'واقعیت مجازی'],
+            datasets: [{
+                label: 'حداقل',
+                data: [1.25, 2.5],
+                backgroundColor: 'rgba(149, 165, 166, 0.7)'
+            }, {
+                label: 'چارک اول',
+                data: [2, 3.5],
+                backgroundColor: 'rgba(52, 152, 219, 0.7)'
+            }, {
+                label: 'میانه',
+                data: [2.75, 4],
+                backgroundColor: 'rgba(46, 204, 113, 0.7)'
+            }, {
+                label: 'چارک سوم',
+                data: [3.25, 4.25],
+                backgroundColor: 'rgba(241, 196, 15, 0.7)'
+            }, {
+                label: 'حداکثر',
+                data: [5, 5],
+                backgroundColor: 'rgba(231, 76, 60, 0.7)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'مقایسه آماری کاهش عدم‌قطعیت'
+                },
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'امتیاز'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+
+    <head>
+      <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+        
+        body {
+          font-family: "B Nazanin";
+          font-size: 18px;
+        }
+      </style>
+    </head>
+    <div class="chart-container" style="width: 100%; margin: 30px 0;">
+      <h3>شکل ۴.5: مقایسه Box Plot - افزایش اعتماد</h3>
+      <canvas id="box_trust" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <script>
+
+    new Chart(document.getElementById('box_trust'), {
+        type: 'bar',
+        data: {
+            labels: ['تصاویر دوبعدی', 'واقعیت مجازی'],
+            datasets: [{
+                label: 'حداقل',
+                data: [1.5, 2.8],
+                backgroundColor: 'rgba(149, 165, 166, 0.7)'
+            }, {
+                label: 'چارک اول',
+                data: [2.667, 3.4],
+                backgroundColor: 'rgba(52, 152, 219, 0.7)'
+            }, {
+                label: 'میانه',
+                data: [3, 3.8],
+                backgroundColor: 'rgba(46, 204, 113, 0.7)'
+            }, {
+                label: 'چارک سوم',
+                data: [3.5, 4.4],
+                backgroundColor: 'rgba(241, 196, 15, 0.7)'
+            }, {
+                label: 'حداکثر',
+                data: [4.333, 5],
+                backgroundColor: 'rgba(231, 76, 60, 0.7)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'مقایسه آماری افزایش اعتماد'
+                },
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'امتیاز'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+
+    <head>
+      <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+        
+        body {
+          font-family: "B Nazanin";
+          font-size: 18px;
+        }
+      </style>
+    </head>
+    <div class="chart-container" style="width: 100%; margin: 30px 0;">
+      <h3>شکل ۴.6: مقایسه Box Plot - تمایل به خرید</h3>
+      <canvas id="box_purchase_intent" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <script>
+
+    new Chart(document.getElementById('box_purchase_intent'), {
+        type: 'bar',
+        data: {
+            labels: ['تصاویر دوبعدی', 'واقعیت مجازی'],
+            datasets: [{
+                label: 'حداقل',
+                data: [1.333, 3],
+                backgroundColor: 'rgba(149, 165, 166, 0.7)'
+            }, {
+                label: 'چارک اول',
+                data: [2.667, 3.667],
+                backgroundColor: 'rgba(52, 152, 219, 0.7)'
+            }, {
+                label: 'میانه',
+                data: [3, 4],
+                backgroundColor: 'rgba(46, 204, 113, 0.7)'
+            }, {
+                label: 'چارک سوم',
+                data: [3.667, 4.333],
+                backgroundColor: 'rgba(241, 196, 15, 0.7)'
+            }, {
+                label: 'حداکثر',
+                data: [4.667, 5],
+                backgroundColor: 'rgba(231, 76, 60, 0.7)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'مقایسه آماری تمایل به خرید'
+                },
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'امتیاز'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+    
+    <div style="margin-top: 40px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+        <h4>اعداد برای جایگزینی در متن:</h4>
+        <ul>
+            <li><strong>p-value کاهش عدم‌قطعیت:</strong> 0.164745</li>
+            <li><strong>p-value افزایش اعتماد:</strong> 0.180114</li>
+            <li><strong>p-value تمایل به خرید:</strong> 0.191898</li>
+            <li><strong>سطح معناداری:</strong> α = 0.05</li>
+            <li><strong>حجم نمونه:</strong> n = 28</li>
+        </ul>
+    </div>
+    
+</body>
+</html>

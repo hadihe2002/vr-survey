@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمودارهای تحلیل آماری</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'B Nazanin', 'Tahoma', sans-serif; margin: 20px; }
+        .chart-container { width: 48%; display: inline-block; margin: 1%; }
+        .chart-title { text-align: center; font-weight: bold; margin-bottom: 10px; }
+        .full-width { width: 98%; }
+        @font-face {
+            font-family: 'B Nazanin';
+            src: local('B Nazanin');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chart-container">
+    <div class="chart-title">مقایسه میانگین‌ها</div>
+    <canvas id="meanComparisonChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">توزیع جنسیت</div>
+    <canvas id="genderChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">توزیع سنی</div>
+    <canvas id="ageChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <div class="chart-title">سطح تحصیلات</div>
+    <canvas id="educationChart"></canvas>
+</div>
+
+<div class="chart-container full-width">
+    <div class="chart-title">Box Plot مقایسه متغیرها</div>
+    <canvas id="boxPlotChart"></canvas>
+</div>
+
+<script>
+Chart.defaults.font.family = "'B Nazanin', 'Tahoma', sans-serif";
+Chart.defaults.font.size = "18";
+
+const stats = {"trust_2d":{"n":28,"mean":2.982,"median":2.917,"stdDev":0.69,"min":1.5,"max":4.333},"trust_vr":{"n":28,"mean":3.821,"median":3.8,"stdDev":0.661,"min":2.8,"max":5},"uncertainty_2d":{"n":28,"mean":2.643,"median":2.625,"stdDev":0.914,"min":1.25,"max":5},"uncertainty_vr":{"n":28,"mean":3.848,"median":3.875,"stdDev":0.636,"min":2.5,"max":5},"intent_2d":{"n":28,"mean":3.06,"median":3,"stdDev":0.87,"min":1.333,"max":4.667},"intent_vr":{"n":28,"mean":4.012,"median":4,"stdDev":0.555,"min":3,"max":5}};
+const demographics = {"total_participants":28,"gender":{"Man":20,"Female":8},"age_groups":{"twenty-to-forty":27,"forty-to-sixty":1},"education":{"Bachelor":22,"Master":5,"Doctorate":1},"occupation":{"Employee":12,"Student":13,"Retired":1,"Other":1,"Manager":1},"vr_access":{"Yes":0,"No":28}};
+
+new Chart(document.getElementById('meanComparisonChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Trust', 'Uncertainty', 'Purchase Intent'],
+        datasets: [{
+            label: '2D',
+            data: [stats.trust_2d.mean, stats.uncertainty_2d.mean, stats.intent_2d.mean],
+            backgroundColor: '#3498db',
+            borderWidth: 1
+        }, {
+            label: 'VR',
+            data: [stats.trust_vr.mean, stats.uncertainty_vr.mean, stats.intent_vr.mean],
+            backgroundColor: '#e74c3c',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 5 } },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.dataset.label + ': ' + context.raw.toFixed(3);
+                    }
+                }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('genderChart'), {
+    type: 'pie',
+    data: {
+        labels: ['مرد', 'زن'],
+        datasets: [{
+            data: [demographics.gender.Man, demographics.gender.Female],
+            backgroundColor: ['#3498db', '#e74c3c']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const total = demographics.total_participants;
+                        const percent = ((context.raw / total) * 100).toFixed(1);
+                        return context.label + ': ' + context.raw + ' نفر (' + percent + '%)';
+                    }
+                }
+            }
+        }
+    }
+});
+
+const ageLabels = Object.keys(demographics.age_groups);
+const ageData = Object.values(demographics.age_groups);
+new Chart(document.getElementById('ageChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ageLabels.map(age => {
+            const ageMap = {
+                'zero-to-twenty': '0-20 سال',
+                'twenty-to-forty': '20-40 سال',
+                'forty-to-sixty': '40-60 سال',
+                'sixty-or-more': '60+ سال'
+            };
+            return ageMap[age] || age;
+        }),
+        datasets: [{
+            data: ageData,
+            backgroundColor: ['#9b59b6', '#2ecc71', '#f39c12', '#34495e']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const total = demographics.total_participants;
+                        const percent = ((context.raw / total) * 100).toFixed(1);
+                        return context.label + ': ' + context.raw + ' نفر (' + percent + '%)';
+                    }
+                }
+            }
+        }
+    }
+});
+
+const eduLabels = Object.keys(demographics.education);
+const eduData = Object.values(demographics.education);
+new Chart(document.getElementById('educationChart'), {
+    type: 'bar',
+    data: {
+        labels: eduLabels.map(edu => {
+            const eduMap = {
+                'Below Diploma': 'زیر دیپلم',
+                'Diploma': 'دیپلم',
+                'Bachelor': 'کارشناسی',
+                'Master': 'کارشناسی ارشد',
+                'Doctorate': 'دکتری'
+            };
+            return eduMap[edu] || edu;
+        }),
+        datasets: [{
+            data: eduData,
+            backgroundColor: '#2ecc71',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const total = demographics.total_participants;
+                        const percent = ((context.raw / total) * 100).toFixed(1);
+                        return 'تعداد: ' + context.raw + ' نفر (' + percent + '%)';
+                    }
+                }
+            }
+        }
+    }
+});
+
+new Chart(document.getElementById('boxPlotChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Trust 2D', 'Trust VR', 'Uncertainty 2D', 'Uncertainty VR', 'Intent 2D', 'Intent VR'],
+        datasets: [{
+            label: 'میانگین',
+            data: [
+                stats.trust_2d.mean, stats.trust_vr.mean,
+                stats.uncertainty_2d.mean, stats.uncertainty_vr.mean,
+                stats.intent_2d.mean, stats.intent_vr.mean
+            ],
+            backgroundColor: ['#3498db', '#e74c3c', '#3498db', '#e74c3c', '#3498db', '#e74c3c'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 5 } },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    afterLabel: function(context) {
+                        const key = ['trust_2d', 'trust_vr', 'uncertainty_2d', 'uncertainty_vr', 'intent_2d', 'intent_vr'][context.dataIndex];
+                        const stat = stats[key];
+                        return [
+                            'انحراف معیار: ' + stat.stdDev,
+                            'میانه: ' + stat.median,
+                            'حداقل: ' + stat.min,
+                            'حداکثر: ' + stat.max
+                        ];
+                    }
+                }
+            }
+        }
+    }
+});
+
+</script>
+</body>
+</html>

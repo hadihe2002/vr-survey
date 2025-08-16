@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Trust & VR Survey</title>
+    <link
+      href="https://unpkg.com/survey-core/survey-core.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/survey-core/survey.core.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"
+    ></script>
+
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap");
+    </style>
+
+    <style>
+      * {
+        direction: rtl;
+        font-family: "Vazirmatn", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+      }
+    </style>
+  </head>
+  <body class="sd-root-modern sd-root--light">
+    <div id="surveyContainer"></div>
+
+    <script type="module">
+      // ---------- 1) Survey definition ----------
+      import surveyJson from "./survey.js";
+
+      function surveyComplete(survey) {
+        saveSurveyResults("/survey", survey.data);
+      }
+
+      function saveSurveyResults(url, json) {
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: JSON.stringify(json),
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log(response.body);
+            } else {
+              console.log(response.body);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      const survey = new Survey.Model(surveyJson);
+
+      survey.onComplete.add(surveyComplete);
+
+      document.addEventListener("DOMContentLoaded", function () {
+        survey.render(document.getElementById("surveyContainer"));
+      });
+    </script>
+  </body>
+</html>

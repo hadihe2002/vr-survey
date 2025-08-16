@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>آزمون نرمال بودن و توزیع داده‌ها</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            font-family: 'Tahoma', sans-serif; 
+            margin: 20px; 
+            line-height: 1.8;
+        }
+        table { 
+            margin: 20px auto; 
+            border-collapse: collapse;
+        }
+        .chart-container { 
+            margin: 30px 0; 
+            text-align: center; 
+        }
+        .results-summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-right: 4px solid #007bff;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>آزمون نرمال بودن توزیع داده‌ها</h2>
+    
+    <div class="results-summary">
+        <h3>خلاصه نتایج آزمون جارک-برا:</h3>
+        <ul>
+            <li><strong>عدم‌قطعیت (دوبعدی):</strong> نرمال - p = 0.4421</li><li><strong>عدم‌قطعیت (واقعیت مجازی):</strong> نرمال - p = 0.8554</li><li><strong>اعتماد (دوبعدی):</strong> نرمال - p = 0.8672</li><li><strong>اعتماد (واقعیت مجازی):</strong> نرمال - p = 0.5486</li><li><strong>تمایل به خرید (دوبعدی):</strong> نرمال - p = 0.6842</li><li><strong>تمایل به خرید (واقعیت مجازی):</strong> نرمال - p = 0.7047</li>
+        </ul>
+    </div>
+
+    
+  <style>
+    @font-face {
+      font-family: 'B Nazanin';
+      src: local('B Nazanin');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: "B Nazanin";
+      font-size: 18px;
+    }
+  </style>
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+<caption><b>جدول ۴.۲: نتایج آزمون نرمال بودن توزیع (آزمون جارک-برا)</b></caption>
+<thead>
+  <tr style="background-color: #f2f2f2;">
+    <th>متغیر</th>
+    <th>حالت</th>
+    <th>آماره JB</th>
+    <th>مقدار p</th>
+    <th>چولگی</th>
+    <th>کشیدگی</th>
+    <th>توزیع نرمال</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2"><b>کاهش عدم‌قطعیت</b></td>
+    <td>تصاویر دوبعدی</td>
+    <td>1.6323</td>
+    <td>0.4421</td>
+    <td>0.5914</td>
+    <td>3.0002</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>واقعیت مجازی</td>
+    <td>0.3125</td>
+    <td>0.8554</td>
+    <td>-0.2168</td>
+    <td>2.7173</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>افزایش اعتماد</b></td>
+    <td>تصاویر دوبعدی</td>
+    <td>0.285</td>
+    <td>0.8672</td>
+    <td>0.0295</td>
+    <td>2.5093</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>واقعیت مجازی</td>
+    <td>1.2009</td>
+    <td>0.5486</td>
+    <td>0.2994</td>
+    <td>2.1811</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>تمایل به خرید</b></td>
+    <td>تصاویر دوبعدی</td>
+    <td>0.759</td>
+    <td>0.6842</td>
+    <td>-0.1606</td>
+    <td>2.2602</td>
+    <td>✓</td>
+  </tr>
+  <tr>
+    <td>واقعیت مجازی</td>
+    <td>0.7</td>
+    <td>0.7047</td>
+    <td>-0.0084</td>
+    <td>2.2256</td>
+    <td>✓</td>
+  </tr>
+</tbody>
+</table>
+    
+    <h3>نمودارهای توزیع متغیرها</h3>
+    
+      <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        body {
+          font-family: 'B Nazanin';
+          font-size: 18px;
+        }
+      </style>
+
+    <div class="chart-container" style="width: 100%; margin: 30px 0;">
+      <h3>شکل ۴.2: توزیع کاهش عدم‌قطعیت</h3>
+      <canvas id="dist_uncertainty" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <script>
+    Chart.defaults.font.family = "'B Nazanin', 'Tahoma', sans-serif";
+    Chart.defaults.font.size = "18";
+
+    new Chart(document.getElementById('dist_uncertainty'), {
+        type: 'bar',
+        data: {
+            labels: ["1.3","1.6","2.0","2.4","2.8","3.1","3.5","3.9","4.3","4.6"],
+            datasets: [{
+                label: 'تصاویر دوبعدی',
+                data: [3,3,7,1,7,1,3,1,1,1],
+                backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                borderColor: 'rgba(52, 152, 219, 1)',
+                borderWidth: 1
+            }, {
+                label: 'واقعیت مجازی',  
+                data: [1,2,1,1,4,5,5,4,2,3],
+                backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                borderColor: 'rgba(231, 76, 60, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'توزیع فراوانی کاهش عدم‌قطعیت'
+                },
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'بازه امتیاز'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'فراوانی'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+
+      <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        body {
+          font-family: 'B Nazanin';
+          font-size: 18px;
+        }
+      </style>
+
+    <div class="chart-container" style="width: 100%; margin: 30px 0;">
+      <h3>شکل ۴.3: توزیع افزایش اعتماد</h3>
+      <canvas id="dist_trust" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <script>
+    Chart.defaults.font.family = "'B Nazanin', 'Tahoma', sans-serif";
+    Chart.defaults.font.size = "18";
+
+    new Chart(document.getElementById('dist_trust'), {
+        type: 'bar',
+        data: {
+            labels: ["1.5","1.8","2.1","2.4","2.6","2.9","3.2","3.5","3.8","4.0"],
+            datasets: [{
+                label: 'تصاویر دوبعدی',
+                data: [1,2,4,0,7,4,2,4,2,2],
+                backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                borderColor: 'rgba(52, 152, 219, 1)',
+                borderWidth: 1
+            }, {
+                label: 'واقعیت مجازی',  
+                data: [5,1,3,4,4,3,1,1,3,3],
+                backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                borderColor: 'rgba(231, 76, 60, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'توزیع فراوانی افزایش اعتماد'
+                },
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'بازه امتیاز'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'فراوانی'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+
+      <style>
+        @font-face {
+          font-family: 'B Nazanin';
+          src: local('B Nazanin');
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        body {
+          font-family: 'B Nazanin';
+          font-size: 18px;
+        }
+      </style>
+
+    <div class="chart-container" style="width: 100%; margin: 30px 0;">
+      <h3>شکل ۴.4: توزیع تمایل به خرید</h3>
+      <canvas id="dist_purchase_intent" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <script>
+    Chart.defaults.font.family = "'B Nazanin', 'Tahoma', sans-serif";
+    Chart.defaults.font.size = "18";
+
+    new Chart(document.getElementById('dist_purchase_intent'), {
+        type: 'bar',
+        data: {
+            labels: ["1.3","1.7","2.0","2.3","2.7","3.0","3.3","3.7","4.0","4.3"],
+            datasets: [{
+                label: 'تصاویر دوبعدی',
+                data: [1,2,4,0,4,7,0,7,2,1],
+                backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                borderColor: 'rgba(52, 152, 219, 1)',
+                borderWidth: 1
+            }, {
+                label: 'واقعیت مجازی',  
+                data: [2,3,0,6,0,6,5,0,4,2],
+                backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                borderColor: 'rgba(231, 76, 60, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'توزیع فراوانی تمایل به خرید'
+                },
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'بازه امتیاز'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'فراوانی'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+    
+</body>
+</html>
